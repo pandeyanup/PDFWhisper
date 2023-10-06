@@ -45,7 +45,7 @@ export function constructMetadata({
       creator: "@anup__pandey",
     },
     icons,
-    // metadataBase: new URL(""),
+    metadataBase: new URL("https://pdf-whisper-pandeyanup.vercel.app"),
     themeColor: "#FFF",
     ...(noIndex && {
       robots: {
