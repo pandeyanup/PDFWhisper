@@ -9,8 +9,8 @@ import { openai } from "@/lib/openai";
 
 import { OpenAIStream, StreamingTextResponse } from "ai";
 
-export const POST = async (req: NextResponse) => {
-  const body = await req.json();
+export async function POST(request: Request) {
+  const body = await request.json();
 
   const { getUser } = getKindeServerSession();
   const user = getUser();
@@ -112,4 +112,4 @@ export const POST = async (req: NextResponse) => {
   });
 
   return new StreamingTextResponse(stream);
-};
+}
