@@ -15,12 +15,13 @@ import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
 import { format } from "date-fns";
 
-type Props = {
+interface BillingFormProps {
   subscriptionPlan: Awaited<ReturnType<typeof getUserSubscriptionPlan>>;
-};
+}
 
-const BillingForm = (props: Props) => {
+const BillingForm = ({ subscriptionPlan }: BillingFormProps) => {
   const { toast } = useToast();
+
   const { mutate: createStripeSession, isLoading } =
     trpc.createStripeSession.useMutation({
       onSuccess: ({ url }) => {
@@ -28,12 +29,13 @@ const BillingForm = (props: Props) => {
         if (!url) {
           toast({
             title: "There was a problem...",
-            description: "Please try again later",
+            description: "Please try again in a moment",
             variant: "destructive",
           });
         }
       },
     });
+
   return (
     <MaxWidthWrapper className="max-w-5xl">
       <form
@@ -47,27 +49,28 @@ const BillingForm = (props: Props) => {
           <CardHeader>
             <CardTitle>Subscription Plan</CardTitle>
             <CardDescription>
-              You are currently on the{" "}
-              <strong>{props.subscriptionPlan.name}</strong> plan.
+              You are currently on the <strong>{subscriptionPlan.name}</strong>{" "}
+              plan.
             </CardDescription>
           </CardHeader>
+
           <CardFooter className="flex flex-col items-start space-y-2 md:flex-row md:justify-between md:space-x-0">
             <Button type="submit">
               {isLoading ? (
                 <Loader2 className="mr-4 h-4 w-4 animate-spin" />
               ) : null}
-              {props.subscriptionPlan.isSubscribed
+              {subscriptionPlan.isSubscribed
                 ? "Manage Subscription"
                 : "Upgrade to PRO"}
             </Button>
 
-            {props.subscriptionPlan.isSubscribed ? (
+            {subscriptionPlan.isSubscribed ? (
               <p className="rounded-full text-xs font-medium">
-                {props.subscriptionPlan.isCanceled
-                  ? "Your plan will be cancled on "
+                {subscriptionPlan.isCanceled
+                  ? "Your plan will be canceled on "
                   : "Your plan renews on "}
                 {format(
-                  new Date(props.subscriptionPlan.stripeCurrentPeriodEnd!),
+                  subscriptionPlan.stripeCurrentPeriodEnd!,
                   "MMMM dd, yyyy"
                 )}
                 .
