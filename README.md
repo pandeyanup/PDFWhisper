@@ -29,7 +29,7 @@ We love contributions! Fork the repository, make your changes, and submit a pull
 License
 -------
 
-PDFWhisper is open-source software released under the [MIT License](https://github.com/ PDFWhisper/PDFWhisper/blob/main/LICENSE).
+PDFWhisper is open-source software released under the [MIT License](https://github.com/pandeyanup/PDFWhisper/blob/main/LICENSE).
 
 Acknowledgments
 ---------------
